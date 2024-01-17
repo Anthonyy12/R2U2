@@ -5,26 +5,28 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AddActividad = () => {
+  const navigate = useNavigate();
   // Estado para almacenar los datos del formulario de la actividad
   const [formData, setFormData] = useState({
     nombre: '',
     responsable: '',
     fechaInicio: '',
     fechaFin: '',
-    imagen: null,
+    imagenUrl: '', // Cambiado a imagenUrl
   });
 
   // Estado para almacenar las actividades
   const [actividades, setActividades] = useState([]);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === 'imagen' ? files[0] : value,
+      [name]: value,
     }));
   };
 
@@ -33,7 +35,7 @@ const AddActividad = () => {
 
     // Crea un nuevo objeto de actividad con los datos del formulario
     const nuevaActividad = {
-      id: actividades.length + 1, // Puedes generar un id de manera más robusta
+      id: actividades.length + 1,
       ...formData,
     };
 
@@ -41,7 +43,8 @@ const AddActividad = () => {
     setActividades((prevActividades) => [...prevActividades, nuevaActividad]);
 
     // Guarda las actividades en localStorage
-    localStorage.setItem('actividades', JSON.stringify([...actividades, nuevaActividad]));
+    const updatedActividades = [...actividades, nuevaActividad];
+    localStorage.setItem('actividades', JSON.stringify(updatedActividades));
 
     // Limpia los datos del formulario
     setFormData({
@@ -49,9 +52,17 @@ const AddActividad = () => {
       responsable: '',
       fechaInicio: '',
       fechaFin: '',
-      imagen: null,
+      imagenUrl: '', // Cambiado a imagenUrl
     });
+
+    // Imprime los datos en la consola
+    console.log('Nueva Actividad:', nuevaActividad);
+    console.log('Actividades Actualizadas:', updatedActividades);
+
+    navigate('/proyectos')
   };
+  // Imprime los datos del formulario en la consola al cambiar
+  console.log('FormData:', formData);
 
   return (
     <Container>
@@ -82,12 +93,11 @@ const AddActividad = () => {
                 <Form.Control type="date" name="fechaFin" value={formData.fechaFin} onChange={handleChange} placeholder="Selecciona una Fecha" />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label>Imagen de la Actividad</Form.Label>
-                <Form.Control type="file" accept="image/png" name="imagen" onChange={handleChange} />
-              </Form.Group>
-              <Link to={{ pathname: '/actividades' }}>
-                <Button variant='primary' onClick={handleSubmit}>Crear</Button>
-              </Link>
+                <Form.Label>URL de la Imagen</Form.Label>
+                <Form.Control type="text" name="imagenUrl" value={formData.imagenUrl} onChange={handleChange} placeholder="Ingrese la URL de la imagen" />
+              </Form.Group>        
+                  <Button variant='primary' onClick={handleSubmit}>Crear</Button>
+
             </Form>
           </Col>
         </Row>

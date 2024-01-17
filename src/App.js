@@ -12,9 +12,18 @@ import Footer from './pages/Footer'
 import Home from './pages/Home';
 import NavSite from './pages/NavSite'
 import Proyecto from './pages/Proyecto';
-import Actividad from './pages/Actividad'
-import AddProyecto from './pages/AddProyecto';
-import AddActividad from './pages/AddActividad';
+import ActTechStunt from './pages/ActTechStunt';
+import ActEchoDust from './pages/ActEchoDust';
+import ActVintich from './pages/ActVintich';
+import AddActTechStunt from './pages/AddActTechStunt';
+import AddActEchoDust from './pages/AddActEchoDust';
+import AddActVintich from './pages/AddActVintich';
+import SubActTechStunt from './pages/SubActTechStunt';
+import AddSubActTech from './pages/AddSubActTech';
+import SubActEcho from './pages/SubActEcho';
+import AddSubActEcho from './pages/AddSubActEcho';
+import SubActVintich from './pages/SubActVintich';
+import AddSubActVintich from './pages/AddSubActVintich';
 import { Amplify } from 'aws-amplify';
 import awsExports from './aws-exports';
 Amplify.configure(awsExports);
@@ -50,9 +59,20 @@ function App() {
 						<Route path="*" element={<Home/>} />
 						<Route path="/" exact={true} element={<Home/>} />
 						<Route path="/proyectos" element={<Proyecto />} />
-            <Route path="/crear-proyecto" element={<AddProyecto />} />
-            <Route path="/actividades" element={<Actividad />} />
-            <Route path="/crear-actividad" element={<AddActividad />} />
+						<Route path='/act-techstunt' element={<ActTechStunt/>}/>
+						<Route path='/act-echodust' element={<ActEchoDust/>}/>
+						<Route path='/act-vintich' element={<ActVintich/>}/>
+
+						<Route path='/crear-act-techstunt' element={<AddActTechStunt/>}/>
+						<Route path='/crear-act-echodust' element={<AddActEchoDust/>}/>
+						<Route path='/crear-act-vintich' element={<AddActVintich/>}/>
+						<Route path='/crear-subact-techstunt' element={<AddSubActTech/>}/>
+						<Route path='/crear-subact-echodust' element={<AddSubActEcho/>}/>
+						<Route path='/crear-subact-vintich' element={<AddSubActVintich/>}/>
+
+						<Route path='/subact-techstunt' element={<SubActTechStunt/>}/>
+						<Route path='/subact-echodust' element={<SubActEcho/>}/>
+						<Route path='/subact-vintich' element={<SubActVintich/>}/>
 					</Routes>
 					<Footer />
         </div>
